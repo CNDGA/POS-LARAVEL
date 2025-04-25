@@ -1,0 +1,12 @@
+//how instal composer & updated composer version
+composer self-update / composer self-update --2
+
+//how instal laravel & updated laravel version
+composer global require laravel/installer
+
+/how create in laravel
+//open htdocs end open git bash in folder projek
+laravel new example-app
+
+// if laravel text eror php eror
+composer global require symfony/polyfill-mbstring

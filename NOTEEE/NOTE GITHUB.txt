@@ -1,0 +1,20 @@
+cerendial manager : hapus github acces
+
+//how make repository github
+git init
+git add .
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/CNDGA/ppkd.git
+git push -u origin main
+
+//how push projek in github
+git add .
+git commit -m "ini nama bebas"
+git push -u origin main
+
+//how remote github
+git push -u origin master
+
+//how cek status in file githubc
+git status

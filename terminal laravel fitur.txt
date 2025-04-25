@@ -1,0 +1,31 @@
+//create Controller 
+php artisan make:controller (LatihanController : namabebas)LatihanController --resource
+
+//create Model dan migrate(database)
+php atisan make:model (Categories : nama bebeas) Categories -m
+
+//seeder menjalankan database di folder database-seeders hanya 1 databases
+//untuk create database 1saja
+php artisan db:seed --class=UserSeeder (UserSeeder)
+
+//seeder menjalankan database di folder database-seeders semua
+//untuk create database semua
+php artisan db:seed 
+
+//untuk mengrun database/migrate
+php artisan migrate
+
+//untuk menjalankan storege untuk menjalankan link (foto)
+php artisan storage:link
+
+//untuk membuat migrate
+php artisan make:migration create_order_details_table 
+
+//download alert 
+masuk ke sweetalert laaravel->intallation->terminal->composer sweet-alaert ->ctrl + p (providers.php)
+			-> COPY PASTE RealRashid\SweetAlert\SweetAlertServiceProvider::class,(*contoh*)
+			-> include alert= @include('sweetalert::alert')->terminal->php artisan sweetalert:publish
+			-> include JS= aler @include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@9"])
+			-> use RealRashid\SweetAlert\Facades\Alert; di Controller 
+
+
