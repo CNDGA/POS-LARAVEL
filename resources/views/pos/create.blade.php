@@ -544,7 +544,7 @@ table td {
                 'bg-blue-gray-200': !submitable()
               }"
               :disabled="!submitable()"
-              x-on:click="submit()"
+              x-on:click="submitTransaction()"
             >
               SUBMIT
             </button>
@@ -665,7 +665,7 @@ table td {
           </div>
         </div>
         <div class="p-4 w-full">
-          <button class="bg-cyan-500 text-white text-lg px-4 py-3 rounded-2xl w-full focus:outline-none" x-on:click="printAndProceed()">PROCEED</button>
+          <button class="bg-cyan-500 text-white text-lg px-4 py-3 rounded-2xl w-full focus:outline-none" x-on:click="printReceipt()">PROCEED</button>
         </div>
       </div>
     </div>
@@ -674,17 +674,13 @@ table td {
 
   <div id="print-area" class="print-area"></div>
 
-  <form action="{{ route('pos.store') }}" method="post" enctype="multipart/form-data">
+  <form id="transaction-form" action="{{ route('pos.store') }}" method="post" enctype="multipart/form-data">
     @csrf
     <input type="hidden" name="cart" :value="JSON.stringify(cart)">
     <input type="hidden" name="cash" :value="cash">
     <input type="hidden" name="change" :value="change">
     <input type="hidden" name="total" :value="getTotalPrice()">
-    <button class="bg-cyan-500 text-white text-lg px-4 py-3 rounded-2xl w-full focus:outline-none"
-        x-on:click="printAndProceed()">
-        PROCEED
-    </button>
-</form>
+  </form>
 
 
 </body>
@@ -735,6 +731,23 @@ table td {
                 localStorage.setItem("first_time", new Date().getTime());
             }
         },
+
+printReceipt() {
+  const receiptContent = document.getElementById("receipt-content");
+  const titleBefore = document.title;
+  const printArea = document.getElementById("print-area");
+
+  printArea.innerHTML = receiptContent.innerHTML;
+  document.title = this.receiptNo;
+
+  window.print();
+  
+  printArea.innerHTML = "";
+  document.title = titleBefore;
+  
+  this.clear();
+},
+
         filteredProducts() {
             const rg = this.keyword ? new RegExp(this.keyword, "gi") : null;
             return this.products.filter((p) => !rg || p.name.match(rg));
@@ -797,6 +810,21 @@ table td {
                 0
             );
         },
+
+
+        submitTransaction() {
+  if (!this.submitable()) return;
+  
+  // Isi form dengan data terbaru
+  document.querySelector('input[name="cart"]').value = JSON.stringify(this.cart);
+  document.querySelector('input[name="cash"]').value = this.cash;
+  document.querySelector('input[name="change"]').value = this.change;
+  document.querySelector('input[name="total"]').value = this.getTotalPrice();
+  
+  // Submit form
+  document.getElementById('transaction-form').submit();
+},
+
         submitable() {
           
 

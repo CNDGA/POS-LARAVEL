@@ -24,6 +24,7 @@
                 <th>Name</th>
                 <th>Price</th>
                 <th>Status</th>
+                <th>Stock</th>
                 <th></th>
               </tr>
             </thead>
@@ -38,6 +39,7 @@
                 <td>{{$data->product_name}}</td>
                 <td>{{$data->product_price}}</td>
                 <td>{{$data->is_active ? 'Publish' : 'Draft'}}</td>
+                <td>{{$data->stock}}</td>
                 <td>
                   <a href="{{route('product.edit',$data->id)}}" class="btn btn-sm btn-secondary">
                     <i class="bi bi-pencil"></i>

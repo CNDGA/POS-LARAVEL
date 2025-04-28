@@ -49,7 +49,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     //mengambil parameter id untuk print
     //jika nama routenya sama (print:contoh) dan class nya jg (print:contoh) maka harus menambahkan ->name ('print');
-    Route::get('print/{id}', [TransactionController::class, 'print'])->name('print');
+    Route::get('/pos/print/{id}', [TransactionController::class, 'print'])->name('pos.print');
 
 
 
@@ -60,10 +60,22 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/', [ReportController::class, 'index'])->name('index');
         // Laporan harian
         Route::get('/daily', [ReportController::class, 'dailyReport'])->name('daily');
-        Route::get('/daily/print', [ReportController::class, 'printDaily'])->name('daily.print');
+
+        Route::get('/print.daily', [ReportController::class, 'printDaily'])->name('print.daily');
+
+        Route::get('/print.weekly', [ReportController::class, 'printWeekly'])->name('print.weekly');
+
+
+        Route::get('/print.monthly', [ReportController::class, 'monthly'])->name('print.monthly');
+
+
+
+
 
         // Laporan mingguan
         Route::get('/weekly', [ReportController::class, 'weeklyReport'])->name('weekly');
+        Route::get('/stok', [ReportController::class, 'stokBarang'])->name('stok');
+
 
         // Route laporan bulanan
         Route::get('/monthly', [ReportController::class, 'monthlyReport'])->name('monthly');

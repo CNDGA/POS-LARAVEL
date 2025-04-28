@@ -43,11 +43,16 @@
                     <input type="file" class="form-control" name="product_photo" >
                   </div>
 
-                        <div class="mb-3">
+                  <div class="mb-3">
                     <label for="" class="col-form-label">Status</label>
                     <br>
                     Publish <input type="radio" name="is_active" value="1" checked>
                     Draft <input type="radio" name="is_active" value="0">
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="" class="col-form-label">Stock</label>
+                    <input type="number" class="form-control" name="stock" placeholder="Enter Your stock product" required>
                   </div>
 
                   <div class="mb-3">

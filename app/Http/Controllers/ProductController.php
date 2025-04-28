@@ -46,6 +46,7 @@ class ProductController extends Controller
             'product_price' => $request->product_price,
             'product_description' => $request->product_description,
             'is_active' => $request->is_active,
+            'stock' => $request->stock,
         ];
 
         if ($request->hasFile('product_photo')) {
@@ -89,6 +90,7 @@ class ProductController extends Controller
             'product_price' => $request->product_price,
             'product_description' => $request->product_description,
             'is_active' => $request->is_active,
+            'stock' => $request->stock,
         ];
 
         $product = Products::find($id);

@@ -12,7 +12,8 @@ class Products extends Model
         'product_price',
         'product_photo',
         'product_description',
-        'is_active'
+        'is_active',
+        'stock'
 
     ];
 
@@ -33,5 +34,15 @@ class Products extends Model
     {
         return $query->withCount('orderDetails')
             ->orderBy('order_details_count', 'desc');
+    }
+
+    public function decreaseStock($quantity)
+    {
+        if ($this->stock >= $quantity) {
+            $this->stock -= $quantity;
+            $this->save();
+            return true;
+        }
+        return false;
     }
 }

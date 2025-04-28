@@ -53,23 +53,23 @@ class TransactionController extends Controller
         DB::beginTransaction();
 
         try {
-            // Decode cart JSON data
             $cartItems = json_decode($request->cart, true);
             $cash = $request->cash;
             $total = $request->total;
             $change = $request->change;
 
-            // Create order record
             $order = new Orders();
-            $order->order_code = 'TWPOS-KS-' . time(); // Same format as in the JS
+            $order->order_code = 'TWPOS-KS-' . time();
             $order->order_date = now();
             $order->order_amount = $total;
             $order->order_change = $change;
-            $order->order_status = 1; // Completed
+            $order->order_status = 1;
             $order->save();
 
-            // Process each item in the cart
             foreach ($cartItems as $item) {
+                $product = Products::findOrFail($item['productId']); // Perhatikan key-nya 'productId' bukan 'product_id'
+
+                // Buat order detail
                 $orderDetail = new OrderDetails();
                 $orderDetail->order_id = $order->id;
                 $orderDetail->product_id = $item['productId'];
@@ -77,25 +77,22 @@ class TransactionController extends Controller
                 $orderDetail->order_price = $item['price'];
                 $orderDetail->order_subtotal = $item['price'] * $item['qty'];
                 $orderDetail->save();
+
+                // Kurangi stok
+                if (!$product->decreaseStock($item['qty'])) {
+                    throw new \Exception('Stok tidak mencukupi untuk produk: ' . $product->product_name);
+                }
             }
 
             DB::commit();
 
-            // return response()->json([
-            //     'status' => 'success',
-            //     'message' => 'Order processed successfully',
-            //     'order_id' => $order->id
-            // ]);
-            return redirect()->to('pos');
+            return redirect()->to('pos')->with('success', 'Transaksi berhasil disimpan');
         } catch (\Exception $e) {
             DB::rollBack();
-
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Failed to process order: ' . $e->getMessage()
-            ], 500);
+            return back()->with('error', 'Gagal memproses transaksi: ' . $e->getMessage());
         }
     }
+
 
 
     /**
@@ -171,7 +168,9 @@ class TransactionController extends Controller
     public function print($id)
     {
         $order = Orders::findOrFail($id);
-        $orderDetails = orderDetails::with('product')->where('order_id', $id)->get();
-        return view('pos.print-struk', compact('order', 'orderDetails'));
+        $orderDetails = OrderDetails::with('product')->where('order_id', $id)->get();
+        $tunai = $order->order_amount + $order->order_change;
+
+        return view('pos.print-struk', compact('order', 'orderDetails', 'tunai'));
     }
 }

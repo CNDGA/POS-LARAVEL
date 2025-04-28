@@ -5,7 +5,7 @@
 
     @if (Auth::check() && Auth::user()->level_id == 3)
     <li class="nav-item">
-      <a class="nav-link collapsed" href="" target="">
+      <a class="nav-link collapsed" href="{{route('reports.stok')}}" target="">
         <i class="bi bi-grid"></i>
         <span>Stock Barang</span>
       </a>

@@ -56,6 +56,11 @@
                   </div>
 
                   <div class="mb-3">
+                    <label for="" class="col-form-label">Product Stock</label>
+                    <input type="number" class="form-control" name="stock" placeholder="Enter Your Price"  value="{{$edit->stock}}" required>
+                  </div>
+
+                  <div class="mb-3">
                     <button class="btn btn-primary" type="submit">Save</button>
                     <button class="btn btn-danger" type="reset">Cancel</button>
                     <a href="{{url()->previous()}}" class="btn btn-primary">Back</a>

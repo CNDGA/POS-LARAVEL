@@ -11,7 +11,7 @@
             <a href="{{ route('reports.index') }}" class="btn btn-outline-secondary me-2">
                 <i class="fas fa-arrow-left me-1"></i> Kembali
             </a>
-            <a href="{{ route('reports.daily.print', ['date' => $date]) }}" class="btn btn-primary" target="_blank">
+            <a href="{{ route('reports.print.daily')}}" class="btn btn-primary" target="_blank">
                 <i class="fas fa-print me-1"></i> Cetak
             </a>
         </div>
