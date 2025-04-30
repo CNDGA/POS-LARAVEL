@@ -34,7 +34,13 @@
               @foreach ($datas as $index => $data)
               <tr>
                 <td>{{$no++}}</td>
-                <td><img src="{{asset('storage/'. $data->product_photo)}}" alt="" width="50"></td>
+                <td>
+                  @if($data->product_photo)
+                      <img src="{{ asset('storage/' . $data->product_photo) }}" width="50" alt="Product">
+                  @else
+                      <img src="https://via.placeholder.com/50" width="50" alt="No Image">
+                  @endif
+              </td>
                 <td>{{$data->category->category_name}}</td>
                 <td>{{$data->product_name}}</td>
                 <td>{{$data->product_price}}</td>

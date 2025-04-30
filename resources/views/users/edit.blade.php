@@ -27,6 +27,20 @@
                     <input type="password" class="form-control" name="password" placeholder="Enter Your password" 
                     value="" >
                   </div>
+
+                  <div class="mb-3">
+                    <label for="" class="col-form-label">Level Name *</label>
+                   <select name="level_id" id="" class="form-control">
+                    <option value="">Select One</option>
+
+                    @foreach ($levels as $level)
+                    <option {{$edit->level_id ==$level->id ? 'selected' : ''}}
+                    value="{{$level->id}}">{{$level->level_name}}</option>
+                    @endforeach
+
+                   </select>
+                  </div>
+
                   <div class="mb-3">
                     <button class="btn btn-primary" type="submit">Save</button>
                     <button class="btn btn-danger" type="submit">Cancel</button>

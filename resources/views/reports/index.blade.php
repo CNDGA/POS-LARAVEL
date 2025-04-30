@@ -24,7 +24,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Laporan Mingguan</h5>
-                    <form action="{{ route('reports.weekly') }}" method="GET">
+                    <form action="{{ route('reports.print.weekly') }}" method="GET">
                         <div class="form-group">
                             <label for="start_date">Minggu dari</label>
                             <input type="date" name="start_date" id="start_date" class="form-control" value="{{ Carbon\Carbon::now()->startOfWeek()->format('Y-m-d') }}">

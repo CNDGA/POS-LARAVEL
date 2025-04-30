@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title'.'Add New Categories')
+@section('title', 'Add New Categories')
 @section('content')
   <section class="section">
     <div class="row">

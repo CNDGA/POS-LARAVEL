@@ -21,8 +21,8 @@
   <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js"></script>
   <script src="js/script.js"></script>
   
-  <script>{{asset("public/assets/dashboard/css/style.css")}}</script> 
-  <script>{{asset("public/assets/dashboard/js/script.js")}}</script>
+  {{-- <script>{{asset("public/assets/dashboard/css/style.css")}}</script> 
+  <script>{{asset("public/assets/dashboard/js/script.js")}}</script> --}}
 
 
 </head>

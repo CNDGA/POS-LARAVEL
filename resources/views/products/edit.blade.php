@@ -40,7 +40,7 @@
                     <input type="text" class="form-control" name="product_description" placeholder="Enter Your Description" value="{{$edit->product_description}}" required>
                   </div>
 
-                  <div class="mb-3">
+                  <div class="mb-3"> 
                   @if ($edit->product_photo)
                   <img src="{{asset('storage/' . $edit->product_photo)}}"
                    alt="{{$edit->product_name}}" width="200">

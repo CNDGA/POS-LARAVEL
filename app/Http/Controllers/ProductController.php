@@ -40,6 +40,17 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        // Tambahkan validasi di sini
+        $request->validate([
+            'product_name' => 'required|string|max:255',
+            'category_id' => 'required|exists:categoris,id',
+            'product_price' => 'required|numeric',
+            'product_description' => 'required|string',
+            'stock' => 'required|integer|min:0',
+            'product_photo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
+
+        // Setelah lolos validasi baru proses simpan
         $data = [
             'category_id' => $request->category_id,
             'product_name' => $request->product_name,
@@ -58,6 +69,7 @@ class ProductController extends Controller
 
         return redirect()->to('product');
     }
+
 
 
     /**
@@ -83,6 +95,15 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        // Validasi di sini juga
+        $request->validate([
+            'product_name' => 'required|string|max:255',
+            'category_id' => 'required|exists:categoris,id',
+            'product_price' => 'required|numeric',
+            'product_description' => 'required|string',
+            'stock' => 'required|integer|min:0',
+            'product_photo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
 
         $data = [
             'category_id' => $request->category_id,
@@ -95,9 +116,8 @@ class ProductController extends Controller
 
         $product = Products::find($id);
         if ($request->hasFile('product_photo')) {
-            //jika gambar sudah ada dan mau diubah maka gambar kita hapus di ganti oleh gambar baru
-            if ($product->product_photo) {
-                File::delete(public_path('storage/' . $product->photo));
+            if ($product->product_photo && File::exists(public_path('storage/' . $product->product_photo))) {
+                File::delete(public_path('storage/' . $product->product_photo));
             }
             $photo = $request->file('product_photo')->store('product', 'public');
             $data['product_photo'] = $photo;
@@ -108,14 +128,29 @@ class ProductController extends Controller
         return redirect()->to('product');
     }
 
+
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
+        // Cari data produk berdasarkan ID
         $product = Products::find($id);
-        File::delete(public_path('storage/' . $product->product_photo));
-        Products::where('id', $id)->delete();
-        return redirect()->to('product');
+
+        // Cek jika produk ditemukan
+        if (!$product) {
+            return redirect()->to('product')->with('error', 'Product not found.');
+        }
+
+        // Jika produk punya foto dan file foto memang ada di storage, hapus file foto
+        if ($product->product_photo && File::exists(public_path('storage/' . $product->product_photo))) {
+            File::delete(public_path('storage/' . $product->product_photo));
+        }
+
+        // Hapus data produk dari database
+        $product->delete();
+
+        // Redirect kembali dengan pesan sukses
+        return redirect()->to('product')->with('success', 'Product deleted successfully.');
     }
 }
